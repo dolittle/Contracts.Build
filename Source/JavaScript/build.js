@@ -25,13 +25,27 @@ if (process.argv.length < 4) {
 console.log('Delete existing declaration files');
 del('./*.d.ts', '**/*.d.ts', '!node_modules/**/*', 'lib');
 
+let protoGenerators = [];
+
+const protocTsGenPath = require.resolve('grpc_tools_node_protoc_ts/bin/protoc-gen-ts');
+
 let args = '';
 if (process.argv[2] == 'grpc-web') {
-    args = `--plugin=protoc-gen-grpc-web=${path.join(__dirname, './grpc-web/macOS/protoc-gen-grpc-web')} `;
-    args += '--grpc-web_out=import_style=commonjs,mode=grpcwebtext:. '
+    protoGenerators = [
+        `protoc-gen-grpc-web=${path.join(__dirname, './grpc-web/macOS/protoc-gen-grpc-web')}`
+    ];
+    //args = `--plugin=protoc-gen-grpc-web=${path.join(__dirname, './grpc-web/macOS/protoc-gen-grpc-web')} `;
+    args = '--grpc-web_out=import_style=commonjs,mode=grpcwebtext:. '
 } else {
-    args = `--plugin=protoc-gen-grpc=$nodemodules'/.bin/grpc_tools_node_protoc_plugin' `;
-    args += `--grpc_out=./ `;
+
+    protoGenerators = [
+        `protoc-gen-grpc=$nodemodules'/.bin/grpc_tools_node_protoc_plugin'`,
+        `protoc-gen-grpc=${protocTsGenPath}`
+    ];
+
+    //args = `--plugin=protoc-gen-grpc=$nodemodules'/.bin/grpc_tools_node_protoc_plugin' `;
+    //args = `--plugin=protoc-gen-grpc=${protocTsGenPath} `;
+    args = `--grpc_out=grpc_js:./ `;
 }
 let subFolder = process.argv[3];
 let hasSubFolder = subFolder !== '.';
@@ -85,28 +99,31 @@ console.log(`Looking for .proto files in '${args.trim()}'`);
 
 process.env.nodemodules = nodeModulesRoot;
 
-let scriptPath = path.join(__dirname, `generate_proxies.sh`);
-scriptPath = `${scriptPath} ${args.trim()}`;
-console.log(`Generate ${scriptPath}`)
-const generate = exec(`${scriptPath}`, (error, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
 
-    if (error == null) {
-        console.log('Transpile any TypeScript files');
-        execSync(`npx tsc --declaration false`, { stdio: 'inherit' });
+protoGenerators.forEach(generator => {
+    let scriptPath = path.join(__dirname, `generate_proxies.sh`);
+    scriptPath = `${scriptPath} --plugin=${generator} ${args.trim()}`;
+    console.log(`Generate ${scriptPath}`)
 
-        if (process.argv[2] == 'grpc-web') {
-            console.log('Rename for web')
+    exec(`${scriptPath}`, (error, stdout, stderr) => {
+        console.log(stdout);
+        console.log(stderr);
 
-            console.log(process.cwd());
+        if (error == null) {
+            console.log('Transpile any TypeScript files');
+            //execSync(`npx tsc --declaration false`, { stdio: 'inherit' });
 
-            const allFiles = getAllFiles(process.cwd(), 'grpc_pb.d.ts');
-            allFiles.forEach(_ => fs.renameSync(_, _.replace('grpc_pb','grpc_web_pb')));
+            if (process.argv[2] == 'grpc-web') {
+                console.log('Rename for web')
+
+                console.log(process.cwd());
+
+                const allFiles = getAllFiles(process.cwd(), 'grpc_pb.d.ts');
+                allFiles.forEach(_ => fs.renameSync(_, _.replace('grpc_pb', 'grpc_web_pb')));
+            }
+
+            console.log('Copy declaration files to lib')
+            //execSync(`find . -name '*.d.ts' -not -path './node_modules/*' -not -path './lib/*' | cpio -pdm ./lib`, { stdio: 'inherit' });
         }
-
-        console.log('Copy declaration files to lib')
-        execSync(`find . -name '*.d.ts' -not -path './node_modules/*' -not -path './lib/*' | cpio -pdm ./lib`, { stdio: 'inherit' });
-    }
+    });
 });
-
