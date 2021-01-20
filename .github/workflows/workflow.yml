@@ -59,7 +59,6 @@ jobs:
       with:
         version: ${{ needs.context.outputs.version }}
         release-type: ${{ needs.context.outputs.release-type }}
-
     - name: Create GitHub Release
       uses: dolittle/github-release-action@v2
       with:
@@ -80,6 +79,5 @@ jobs:
         dotnet-version: '3.1.x'
     - name: Create packages
       run: dotnet pack --configuration Release -o ${{ env.NUGET_OUTPUT }} /p:PackageVersion=${{ needs.create-release.outputs.version }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
-
     - name: Push NuGet packages
       run: dotnet nuget push --skip-duplicate '${{ env.NUGET_OUTPUT }}/*.nupkg' --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
