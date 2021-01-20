@@ -1,8 +1,7 @@
 name: CI/CD Workflow
 
 env:
-  PRERELEASE_BRANCHES: '' # Comma separated list of prerelease branch names. 'alpha,rc, ...'
-  CASCADES: '' # Comma separated list of cascading repos. 'dolittle/DotNet.SDK,...'
+  PRERELEASE_BRANCHES: updategrpc # Comma separated list of prerelease branch names. 'alpha,rc, ...'
   NUGET_OUTPUT: Artifacts/NuGet
 
 on:
@@ -62,9 +61,8 @@ jobs:
         release-type: ${{ needs.context.outputs.release-type }}
 
     - name: Create GitHub Release
-      uses: dolittle/github-release-action@v1
+      uses: dolittle/github-release-action@v2
       with:
-        cascading-release: false
         version: ${{ steps.increment-version.outputs.next-version }}
   
   dot-net-cd:
