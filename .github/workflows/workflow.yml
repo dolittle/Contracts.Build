@@ -20,6 +20,7 @@ jobs:
       should-publish: ${{ steps.context.outputs.should-publish }}
       release-type: ${{ steps.context.outputs.release-type }}
       pr-body: ${{ steps.context.outputs.pr-body }}
+      pr-url: ${{ steps.context.outputs.pr-url }}
     steps:
     - uses: actions/checkout@v2
     - name: Establish context
@@ -57,6 +58,15 @@ jobs:
       with:
         version: ${{ needs.context.outputs.version }}
         release-type: ${{ needs.context.outputs.release-type }}
+    - name: Prepend to Changelog
+      uses: dolittle/add-to-changelog-action@v2
+      with:
+        version: ${{ steps.increment-version.outputs.next-version }}
+        body: ${{ needs.context.outputs.pr-body }}
+        pr-url: ${{ needs.context.outputs.pr-url }}
+        changelog-path: CHANGELOG.md
+        user-email: build@dolittle.com
+        user-name: dolittle-build
     - name: Create GitHub Release
       uses: dolittle/github-release-action@v2
       with:
