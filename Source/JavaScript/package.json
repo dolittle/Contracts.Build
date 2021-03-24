@@ -1,6 +1,6 @@
 {
     "name": "@dolittle/protobuf.build",
-    "version": "2.0.2",
+    "version": "0.0.0",
     "description": "",
     "publishConfig": {
         "access": "public"
