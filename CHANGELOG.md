@@ -1,3 +1,9 @@
+# [2.0.4] - 2021-3-24 [PR: #10](https://github.com/dolittle/Protobuf/pull/10)
+## Summary
+
+Change from using `yarn` to `npm` for publishing package.
+
+
 # [2.0.3] - 2021-3-24 [PR: #9](https://github.com/dolittle/Protobuf/pull/9)
 ## Summary
 
