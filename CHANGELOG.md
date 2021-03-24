@@ -1,3 +1,9 @@
+# [2.0.6] - 2021-3-24 [PR: #12](https://github.com/dolittle/Protobuf/pull/12)
+## Summary
+
+Set npm registry address to force use of NODE_AUTH_TOKEN
+
+
 # [2.0.5] - 2021-3-24 [PR: #11](https://github.com/dolittle/Protobuf/pull/11)
 ## Summary
 
