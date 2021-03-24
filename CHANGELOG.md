@@ -1,3 +1,9 @@
+# [2.0.5] - 2021-3-24 [PR: #11](https://github.com/dolittle/Protobuf/pull/11)
+## Summary
+
+Use `npm version` to set new version before publishing package.
+
+
 # [2.0.4] - 2021-3-24 [PR: #10](https://github.com/dolittle/Protobuf/pull/10)
 ## Summary
 
