@@ -102,6 +102,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+        always-auth: true
     - name: Push npmjs packages
       working-directory: ./Source/JavaScript
       run: yarn publish --new-version ${{ needs.create-release.outputs.version }} --no-git-tag-version
