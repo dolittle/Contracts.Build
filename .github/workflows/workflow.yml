@@ -103,8 +103,11 @@ jobs:
       with:
         node-version: 12.x
         always-auth: true
+    - name: Update package version
+      working-directory: ./Source/JavaScript
+      run: npm version ${{ needs.create-release.outputs.version }}
     - name: Push NPM packages
       working-directory: ./Source/JavaScript
-      run: npm publish --tag ${{ needs.create-release.outputs.version }}
+      run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
