@@ -103,8 +103,8 @@ jobs:
       with:
         node-version: 12.x
         always-auth: true
-    - name: Push npmjs packages
+    - name: Push NPM packages
       working-directory: ./Source/JavaScript
-      run: yarn publish --new-version ${{ needs.create-release.outputs.version }} --no-git-tag-version
+      run: npm publish --tag ${{ needs.create-release.outputs.version }}
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
