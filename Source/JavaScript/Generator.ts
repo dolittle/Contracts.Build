@@ -49,7 +49,7 @@ export class Generator {
                 ...options.includes.map(_ => `-I${_}`),
                 protoFile);
             await protocTS(
-                `--ts_out=${buildDir}`,
+                `--ts_out=grpc_js:${buildDir}`,
                 ...options.includes.map(_ => `-I${_}`),
                 protoFile);
         }
