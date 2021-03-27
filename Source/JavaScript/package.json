@@ -1,34 +1,35 @@
 {
     "name": "@dolittle/protobuf.build",
-    "version": "0.0.0",
+    "author": "Dolittle",
     "description": "",
-    "publishConfig": {
-        "access": "public"
-    },
-    "bin": {
-        "dolittle_proto_build": "./build.js"
-    },
+    "version": "0.0.0",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/dolittle-tools/JavaScript.Protobuf.git"
     },
-    "author": "",
-    "license": "MIT",
     "bugs": {
         "url": "https://github.com/dolittle-tools/JavaScript.Protobuf/issues"
     },
     "homepage": "https://github.com/dolittle-tools/JavaScript.Protobuf#readme",
-    "dependencies": {
-        "@types/google-protobuf": "3.7.4",
-        "@types/node": "14.14.35",
-        "del-cli": "3.0.1",
-        "glob": "7.1.6",
-        "@grpc/grpc-js": "1.2.11",
-        "grpc_tools_node_protoc_ts": "5.1.3",
-        "grpc-tools": "1.11.0",
-        "grpc-web": "1.2.1",
-        "ts-protoc-gen": "0.14.0",
-        "typescript": "^3.8.3"
+    "publishConfig": {
+        "access": "public"
     },
-    "devDependencies": {}
+    "scripts": {
+        "build": "tsc"
+    },
+    "bin": {
+        "dolittle_proto_build": "./dolittle_proto_build"
+    },
+    "dependencies": {
+        "commander": "7.2.0",
+        "execa": "5.0.0",
+        "grpc-tools": "1.11.1",
+        "grpc_tools_node_protoc_ts": "5.1.3"
+    },
+    "devDependencies": {
+        "@tsconfig/node12": "1.0.7",
+        "@types/node": "14.14.37",
+        "typescript": "4.2.3"
+    }
 }
