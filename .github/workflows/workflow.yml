@@ -108,7 +108,7 @@ jobs:
   java-script-cd:
     name: JavaScript CD
     runs-on: ubuntu-latest
-    needs: [context, create-release]
+    needs: [context, java-script-ci, create-release]
     if: ${{ needs.context.outputs.should-publish == 'true'  }}
 
     steps:
