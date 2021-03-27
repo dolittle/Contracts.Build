@@ -1,3 +1,13 @@
+# [3.1.3] - 2021-3-27 [PR: #17](https://github.com/dolittle/Protobuf/pull/17)
+## Summary
+
+Changed config of the TS compiler so that it `uses @grpc/grpc-js` imports.
+
+### Fixed
+
+- Changed config of the TS compiler so that it `uses @grpc/grpc-js` imports.
+
+
 # [3.1.2] - 2021-3-27 [PR: #16](https://github.com/dolittle/Protobuf/pull/16)
 ## Summary
 
