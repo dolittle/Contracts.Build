@@ -41,6 +41,21 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release
 
+  java-script-ci:
+    name: JavaScript CI
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+        registry-url: 'https://registry.npmjs.org'
+    - run: yarn
+      working-directory: ./Source/JavaScript
+    - run: yarn build
+      working-directory: ./Source/JavaScript
+
   create-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
@@ -90,7 +105,7 @@ jobs:
     - name: Push NuGet packages
       run: dotnet nuget push --skip-duplicate '${{ env.NUGET_OUTPUT }}/*.nupkg' --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
 
-  js-cd:
+  java-script-cd:
     name: JavaScript CD
     runs-on: ubuntu-latest
     needs: [context, create-release]
@@ -103,6 +118,10 @@ jobs:
       with:
         node-version: 12.x
         registry-url: 'https://registry.npmjs.org'
+    - run: yarn
+      working-directory: ./Source/JavaScript
+    - run: yarn build
+      working-directory: ./Source/JavaScript
     - name: Update package version
       working-directory: ./Source/JavaScript
       run: npm version ${{ needs.create-release.outputs.version }}
