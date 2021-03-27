@@ -1,3 +1,13 @@
+# [3.1.2] - 2021-3-27 [PR: #16](https://github.com/dolittle/Protobuf/pull/16)
+## Summary
+
+Adding support for rewriting `import ... from "...";` in addition to `require('...')` statements in the JS/TS generator.
+
+### Changed
+
+- The JS/TS generator cli now rewrites both `require('...')` and `import ... from "...";`.
+
+
 # [3.1.1] - 2021-3-27 [PR: #15](https://github.com/dolittle/Protobuf/pull/15)
 ## Summary
 
