@@ -10,6 +10,9 @@ import { protoc, protocTS } from './Compilers';
 import { GenerateOptions } from './GenerateOptions';
 import { GenerationTarget } from './GenerationTarget';
 
+const regexpEscape = (expression: string): string => 
+    expression.replace('\\','\\\\').replace('/','\\/').replace('(','\\(').replace(')','\\)');
+
 export class Generator {
     async generate(options: GenerateOptions): Promise<void> {
         try {
@@ -87,25 +90,36 @@ export class Generator {
             return [contents, false];
         }
 
+        const importReplacements = this.findImportsToReplaceInContent(options, contents, `from "`, `";`);
+        const requireReplacements = this.findImportsToReplaceInContent(options, contents, `require('`, `');`);
+
+        for (const [from, to] of importReplacements.concat(requireReplacements)) {
+            contents = contents.replace(from, to);
+        }
+
+        return [contents, true];
+    }
+
+    private findImportsToReplaceInContent(options: GenerateOptions, contents: string, prefix: string, postfix: string): [string, string][] {
+        const replacements: [string, string][] = [];
         for (const {from, to, package: pkg} of options.rewrites) {
-            const re = new RegExp(`require\\('(.*${from.replace('\\','\\\\').replace('/','\\/')}.*)'\\);`, 'g');
+            const re = new RegExp(`${regexpEscape(prefix)}(.*${regexpEscape(from)}.*)${regexpEscape(postfix)}`, 'g');
             for (const match of contents.matchAll(re)) {
                 let [before, after] = match[1].split(from, 2);
 
                 let replacement = match[0];
                 if (pkg) {
-                    replacement = `require('${to}${after}');`;
+                    replacement = prefix+to+after+postfix;
                 } else {
                     if (before.endsWith('../')) {
                         before = before.substr(0, before.length-3);
                     }
-                    replacement = `require('${before}${to}${after}');`;
+                    replacement = prefix+before+to+after+postfix;
                 }
-                contents = contents.replace(match[0], replacement);
+                replacements.push([match[0], replacement]);
             }
         }
-
-        return [contents, true];
+        return replacements;
     }
 
     private async ensureCleanOutputDirectory(options: GenerateOptions): Promise<void> {
