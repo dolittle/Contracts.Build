@@ -9,10 +9,7 @@ const ProtocTSPluginPath = require.resolve('grpc_tools_node_protoc_ts/bin/protoc
 
 export const protoc = async (...args: string[]): Promise<void> => {
     try {
-        const nodeArgs = [ProtocPath, `--plugin=protoc-gen-grpc=${ProtocPluginPath}`, ...args];
-        await execa('node', nodeArgs, {
-            stdout: 'pipe'
-        });
+        await execa('node', [ProtocPath, `--plugin=protoc-gen-grpc=${ProtocPluginPath}`, ...args]);
     } catch (error) {
         throw error.stderr;
     }
@@ -20,10 +17,7 @@ export const protoc = async (...args: string[]): Promise<void> => {
 
 export const protocTS = async (...args: string[]): Promise<void> => {
     try {
-        const nodeArgs = [ProtocPath, `--plugin=protoc-gen-ts=${ProtocTSPluginPath}`, ...args];
-        await execa('node', nodeArgs, {
-            stdout: 'pipe'
-        });
+        await execa('node', [ProtocPath, `--plugin=protoc-gen-ts=${ProtocTSPluginPath}`, ...args]);
     } catch (error) {
         throw error.stderr;
     }
