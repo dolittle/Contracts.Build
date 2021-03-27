@@ -1,3 +1,13 @@
+# [3.1.1] - 2021-3-27 [PR: #15](https://github.com/dolittle/Protobuf/pull/15)
+## Summary
+
+Fix bug where no rewrites or includes were provided to JS/TS generator cli.
+
+### Fixed
+
+- Defaulting to empty arrays for rewrites and includes for the JS/TS generator cli.
+
+
 # [3.1.0] - 2021-3-27 [PR: #14](https://github.com/dolittle/Protobuf/pull/14)
 ## Summary
 
