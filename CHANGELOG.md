@@ -1,3 +1,13 @@
+# [3.1.0] - 2021-3-27 [PR: #14](https://github.com/dolittle/Protobuf/pull/14)
+## Summary
+
+Added support for specifying output directory for JS/TS generator
+
+### Added
+
+- Support `-O <path>` option for the JS/TS generator cli.
+
+
 # [3.0.0] - 2021-3-27 [PR: #13](https://github.com/dolittle/Protobuf/pull/13)
 ## Summary
 
