@@ -2,7 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import os from 'os';
-import { dirname as pathDirname, join as pathJoin, relative as pathRelative } from 'path';
+import process from 'process';
+import { dirname as pathDirname, join as pathJoin, relative as pathRelative, normalize as pathNormalize, resolve as pathResolve } from 'path';
 import { mkdir, mkdtemp, readdir, readFile, rmdir, stat, writeFile } from 'fs/promises';
 
 import { protoc, protocTS } from './Compilers';
@@ -10,18 +11,14 @@ import { GenerateOptions } from './GenerateOptions';
 import { GenerationTarget } from './GenerationTarget';
 
 export class Generator {
-    constructor(
-        readonly outputDirectory: string
-    ) {}
-
     async generate(options: GenerateOptions): Promise<void> {
         try {
             console.log('Generating code for', options.target);
             console.log('With includes', options.includes.join(' '));
             console.log('With rewrites', options.rewrites.map(_ => `${_.from}:${_.to}`).join(' '));
-            console.log('To directory', this.outputDirectory);
+            console.log('To directory', options.output);
 
-            await this.ensureCleanOutputDirectory();
+            await this.ensureCleanOutputDirectory(options);
             const protoFiles = await this.findAllProtoFilesIn(...options.paths);
 
             const tmpDir = await this.createTemporaryBuildDirectory();
@@ -67,7 +64,7 @@ export class Generator {
 
             if (!shouldInclude) continue;
 
-            const movedFilePath = pathJoin(this.outputDirectory, rewrittenPath);
+            const movedFilePath = pathJoin(options.output, rewrittenPath);
             const movedFileDirectory = pathDirname(movedFilePath);
             await mkdir(movedFileDirectory, { recursive: true });
             await writeFile(movedFilePath, rewrittenContents);
@@ -111,19 +108,25 @@ export class Generator {
         return [contents, true];
     }
 
-    private async ensureCleanOutputDirectory(): Promise<void> {
+    private async ensureCleanOutputDirectory(options: GenerateOptions): Promise<void> {
+        const currentDirectory = pathResolve(process.cwd());
+        const outputDirectory = pathResolve(options.output);
+        if (currentDirectory.startsWith(outputDirectory)) {
+            console.log('Output directory includes current directory, not cleaning');
+            return;
+        }
         try {
-            const info = await stat(this.outputDirectory);
+            const info = await stat(outputDirectory);
             if (info.isDirectory()) {
-                await rmdir(this.outputDirectory, { recursive: true });
+                await rmdir(outputDirectory, { recursive: true });
             } else {
-                throw new Error(`Output directory '${this.outputDirectory}' is not a directory`);
+                throw new Error(`Output directory '${options.output}' is not a directory`);
             }
         } catch (error) {
             if (error.code !== 'ENOENT') throw error;
         }
 
-        await mkdir(this.outputDirectory, { recursive: true });
+        await mkdir(outputDirectory, { recursive: true });
     }
 
     private async createTemporaryBuildDirectory(): Promise<string> {

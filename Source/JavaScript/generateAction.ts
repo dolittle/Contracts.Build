@@ -7,6 +7,7 @@ import { GenerationTarget } from './GenerationTarget';
 type GenerateActionCallback = (options: GenerateOptions) => Promise<void> | void;
 
 type Options = {
+    O: string,
     I: string[],
     R: string[],
     skipEmptyFiles?: boolean,
@@ -16,6 +17,7 @@ export const generateAction = (target: GenerationTarget, action: GenerateActionC
     return (paths: string[], options: Options) => {
         action({ 
             target,
+            output: options.O,
             paths,
             includes: options.I,
             rewrites: options.R.map(_ => {

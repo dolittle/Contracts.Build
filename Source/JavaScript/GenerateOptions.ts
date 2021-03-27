@@ -5,6 +5,7 @@ import { GenerationTarget } from './GenerationTarget';
 
 export type GenerateOptions = {
     readonly target: GenerationTarget;
+    readonly output: string;
     readonly paths: readonly string[];
     readonly includes: readonly string[];
     readonly rewrites: readonly {readonly from: string, readonly to: string, readonly package: boolean}[];
