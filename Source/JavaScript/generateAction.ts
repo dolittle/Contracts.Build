@@ -19,8 +19,8 @@ export const generateAction = (target: GenerationTarget, action: GenerateActionC
             target,
             output: options.O,
             paths,
-            includes: options.I,
-            rewrites: options.R.map(_ => {
+            includes: options.I ?? [],
+            rewrites: (options.R ?? []).map(_ => {
                 const [from, to] = _.split(':',2);
                 const [pkg, pkgName] = to.split('=', 2);
                 if (pkg === 'pkg') {
