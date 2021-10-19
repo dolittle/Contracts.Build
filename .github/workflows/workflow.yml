@@ -1,7 +1,7 @@
 name: CI/CD Workflow
 
 env:
-  PRERELEASE_BRANCHES: alpha,beta # Comma separated list of prerelease branch names. 'alpha,rc, ...'
+  PRERELEASE_BRANCHES: upgradetools # Comma separated list of prerelease branch names. 'alpha,rc, ...'
   NUGET_OUTPUT: Artifacts/NuGet
 
 on:
@@ -74,6 +74,7 @@ jobs:
         version: ${{ needs.context.outputs.version }}
         release-type: ${{ needs.context.outputs.release-type }}
     - name: Prepend to Changelog
+      if: ${{ needs.context.outputs.should-publish == 'true' && needs.context.outputs.release-type != 'prerelease' }}
       uses: dolittle/add-to-changelog-action@v2
       with:
         version: ${{ steps.increment-version.outputs.next-version }}
