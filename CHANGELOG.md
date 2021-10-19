@@ -1,3 +1,13 @@
+# [3.2.0] - 2021-10-19 [PR: #18](https://github.com/dolittle/Protobuf/pull/18)
+## Summary
+
+Updates the versions of the Grpc and protobuf packages
+
+### Fixed
+
+- Updated Grpc and protobuf versions
+
+
 # [3.1.3] - 2021-3-27 [PR: #17](https://github.com/dolittle/Protobuf/pull/17)
 ## Summary
 
