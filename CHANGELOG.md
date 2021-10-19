@@ -1,3 +1,7 @@
+# [3.2.0-upgradetools.0] - 2021-10-19 [PR: #19](https://github.com/dolittle/Protobuf/pull/19)
+Update versions of C# and TS dependencies
+
+
 # [3.1.3] - 2021-3-27 [PR: #17](https://github.com/dolittle/Protobuf/pull/17)
 ## Summary
 
