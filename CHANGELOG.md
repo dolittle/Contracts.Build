@@ -1,3 +1,13 @@
+# [3.3.0] - 2021-11-30 [PR: #21](https://github.com/dolittle/Protobuf/pull/21)
+## Summary
+
+Add ability to keep some source files for .NET protobuf build projects.
+
+### Added
+
+- The `<DolittleProtoKeepFiles>` MSbuild property that excludes the listed files from the `DeleteSourceFiles` target.
+
+
 # [3.2.0] - 2021-10-19 [PR: #18](https://github.com/dolittle/Protobuf/pull/18)
 ## Summary
 
