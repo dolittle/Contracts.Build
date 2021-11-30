@@ -2,5 +2,6 @@
     <PropertyGroup>
         <DolittleProtoProject>NotSet</DolittleProtoProject>
         <DolittleProtoRoot>../</DolittleProtoRoot>
+        <DolittleProtoKeepFiles></DolittleProtoKeepFiles>
     </PropertyGroup>
 </Project>
