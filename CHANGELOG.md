@@ -1,3 +1,13 @@
+# [3.3.1] - 2021-11-30 [PR: #23](https://github.com/dolittle/Protobuf/pull/23)
+## Summary
+
+Turns back on compilation of generated .NET protobuf code - to make build pipelines with other sources that rely on the generated code works. To be hones I have no idea how these files were actually built in the end - but it must have worked somehow.
+
+### Fixed
+
+- Turn compilation of generated .NET protobuf source back on, and make errors go away by generating empty service files.
+
+
 # [3.3.0] - 2021-11-30 [PR: #21](https://github.com/dolittle/Protobuf/pull/21)
 ## Summary
 
