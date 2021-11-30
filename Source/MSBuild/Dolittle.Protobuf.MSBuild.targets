@@ -3,6 +3,7 @@
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
         <IncludeSource>True</IncludeSource>
         <Protobuf_NoWarnMissingExpected>true</Protobuf_NoWarnMissingExpected>
+        <Protobuf_TouchMissingExpected>true</Protobuf_TouchMissingExpected>
     </PropertyGroup>
 
     <Import Project="$(NuGetPackageRoot)grpc.tools/2.41.0/build/Grpc.Tools.props"/>
@@ -11,9 +12,8 @@
     <ItemGroup>
         <Protobuf Include="$(DolittleProtoProject)/**/*.proto"
                     ProtoRoot="$(DolittleProtoRoot)"
-                    OutputDir="%(RecursiveDir)" 
-                    GrpcServices="Both" 
-                    CompileOutputs="False" />
+                    OutputDir="%(RecursiveDir)"
+                    GrpcServices="Both" />
     </ItemGroup>
 
     <Target Name="DeleteSourceFiles" BeforeTargets="BeforeBuild">
