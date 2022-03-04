@@ -6,8 +6,8 @@
         <Protobuf_TouchMissingExpected>true</Protobuf_TouchMissingExpected>
     </PropertyGroup>
 
-    <Import Project="$(NuGetPackageRoot)grpc.tools/2.41.0/build/Grpc.Tools.props"/>
-    <Import Project="$(NuGetPackageRoot)grpc.tools/2.41.0/build/Grpc.Tools.targets"/>
+    <Import Project="$(NuGetPackageRoot)grpc.tools/2.43.0/build/Grpc.Tools.props"/>
+    <Import Project="$(NuGetPackageRoot)grpc.tools/2.43.0/build/Grpc.Tools.targets"/>
 
     <ItemGroup>
         <Protobuf Include="$(DolittleProtoProject)/**/*.proto"
