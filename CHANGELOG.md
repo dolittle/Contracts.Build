@@ -1,3 +1,15 @@
+# [4.0.0] - 2022-3-4 [PR: #24](https://github.com/dolittle/Protobuf/pull/24)
+## Summary
+
+Update gRPC and Protobuf package dependencies to latest versions and remove unneeded packages.
+
+### Removes
+- The gRPC package dependency, it should not be necessary to build gRPC projects.
+
+### Changes
+- Update gRPC and Protobuf package versions.
+
+
 # [3.3.1] - 2021-11-30 [PR: #23](https://github.com/dolittle/Protobuf/pull/23)
 ## Summary
 
