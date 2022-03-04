@@ -1,3 +1,13 @@
+# [4.0.1] - 2022-3-4 [PR: #25](https://github.com/dolittle/Protobuf/pull/25)
+## Summary
+
+Ads the grpc api package
+
+### Added
+
+- Grpc.Core.Api package
+
+
 # [4.0.0] - 2022-3-4 [PR: #24](https://github.com/dolittle/Protobuf/pull/24)
 ## Summary
 
